@@ -1,0 +1,77 @@
+.box {
+  width: 300px;
+  height: 200px;
+  margin: 50px auto 50px auto;
+  padding: 20px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  background-color: bisque;
+}
+
+.box__input-wraper{
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+
+.box__input{
+  box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 21px;
+  color: #000000;
+}
+
+.error .box__input{
+  color: red;
+}
+
+.box__input.red{
+  color: red;
+}
+
+
+/* ##### additional ##### */
+ .box__input-description{
+  content: '';
+  display: inline-block;
+  margin: 8px 0 0 20px;
+  padding: 5px 40px 5px 20px;
+  height: 20px;
+  border-radius: 5px;
+  position: absolute;
+  bottom: -37px;
+  left: 0;
+  opacity: 0;
+  transition-duration: 2s;
+}
+
+.error .box__input-description{
+  opacity: 1;
+  transition-duration: 1s;
+}
+
+.box__input-description{
+  background: url('../img/Hapy.png'), #ffffff;
+  background-repeat: no-repeat;
+  background-size: 25px 25px;
+  background-position: 95% center;
+}
+
+.sed .box__input-description{
+  background: url('../img/Sed.png'), #ffffff;
+  background-repeat: no-repeat;
+  background-size: 25px 25px;
+  background-position: 95% center;
+}
+
+.crying .box__input-description{
+  background: url('../img/Crying.png'), #ffffff;
+  background-repeat: no-repeat;
+  background-size: 25px 25px;
+  background-position: 95% center;
+}
