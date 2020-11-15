@@ -1,0 +1,13 @@
+.size-radio__label{
+  cursor: pointer;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+.size-radio__input{
+  margin: 0 8px 0 0;
+}
+.size-radio__decrip{
+  font-size: 14px;
+}

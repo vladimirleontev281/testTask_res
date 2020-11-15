@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resliv - task 2</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="index.js"></script>
+</head>
+<body>
+  <div class="box">
+    <div class="box-section">
+      <h3 class="box-section__descrip">Choose the size you need.</h3>
+      <ul class="size-radio list list_horizontal">
+  <li class="size-radio__item list__item">
+  <label class="size-radio__label">
+    <input type="radio" class="size-radio__input" name="size" value="S">
+    <span class="size-radio__decrip">S</span>
+  </label>
+</li>
+  <li class="size-radio__item list__item">
+  <label class="size-radio__label">
+    <input type="radio" class="size-radio__input" name="size" value="M">
+    <span class="size-radio__decrip">M</span>
+  </label>
+</li>
+  <li class="size-radio__item list__item">
+  <label class="size-radio__label">
+    <input type="radio" class="size-radio__input" name="size" value="L">
+    <span class="size-radio__decrip">L</span>
+  </label>
+</li>
+</ul>
+    </div>
+    <div class="box-section">
+      <h3 class="box-section__descrip">Specify the colors you are interested in.</h3>
+      <ul class="color-list list list_vertical">
+  <li class="color-list__item list__item">
+  <label class="color-list__label">
+    <input type="checkbox" class="color-list__input" name="color_1" value="1">
+    <span class="color-list__decrip">color 1</span>
+  </label>
+</li>
+  <li class="color-list__item list__item">
+  <label class="color-list__label">
+    <input type="checkbox" class="color-list__input" name="color_2" value="2">
+    <span class="color-list__decrip">color 2</span>
+  </label>
+</li>
+  <li class="color-list__item list__item">
+  <label class="color-list__label">
+    <input type="checkbox" class="color-list__input" name="color_3" value="3">
+    <span class="color-list__decrip">color 3</span>
+  </label>
+</li>
+  <li class="color-list__item list__item">
+  <label class="color-list__label">
+    <input type="checkbox" class="color-list__input" name="color_4" value="4">
+    <span class="color-list__decrip">color 4</span>
+  </label>
+</li>
+  <li class="color-list__item list__item">
+  <label class="color-list__label">
+    <input type="checkbox" class="color-list__input" name="color_5" value="5">
+    <span class="color-list__decrip">color 5</span>
+  </label>
+</li>
+</ul>
+    </div>
+    <div class="box-section">
+      <h3 class="box-section__descrip">Specify the manufacturers you are interested in.</h3>
+      <select class="manufacturer-select" multiple size="4" id="manufacturer">
+  <option value="aaa">aaa</option>
+  <option value="b&c">b&c</option>
+  <option value="ddd">ddd</option>
+  <option value="eee">eee</option>
+</select>
+    </div>
+    <div class="box-section">
+      <div class="sale-checkbox">
+  <label class="sale-checkbox__label">
+    <input type="checkbox" class="sale-checkbox__input" name="sale" value="1">
+    <span class="sale-checkbox__decrip">sale</span>
+  </label>
+</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,9 +1,11 @@
 "use strict";
 const gulp = require('gulp'),
+  /* HTML */
+  fileinclude = require('gulp-file-include'),
+
   /* CSS */
   autoprefixer = require('gulp-autoprefixer'),
   cssmin = require('gulp-minify-css'),
-  sass = require('gulp-sass'),
 
   /* Common */
   concat = require('gulp-concat'),
@@ -17,44 +19,42 @@ const gulp = require('gulp'),
 gulp.task('build:html', function() {
   return gulp
     .src('./src/*.html')
-    .pipe(gulp.dest('./dist'));
+    .pipe(fileinclude({
+      prefix: "@@",
+      basepath: './src/components'
+    }))
+    .pipe(gulp.dest('./dist/filter'));
 });
 /****************************************************/
 /* css */
 /****************************************************/
-gulp.task('convert:sass', function() {
+gulp.task('build:css', function() {
   return gulp
-    .src('./src/css/**/*.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('./src/css'));
-});
-gulp.task('create:css', function() {
-  return gulp
-    .src('./src/css/*.css')
+    .src(['./src/*.css', './src/components/**/*.css'])
     .pipe(autoprefixer())
     .pipe(concat('styles.css'))
     .pipe(cssmin())
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest('./dist/filter'));
 });
-gulp.task('build:css', gulp.series('convert:sass', 'create:css'));
 
 /****************************************************/
 /* js */
 /****************************************************/
 gulp.task('build:js', function() {
   return gulp
-    .src('./src/js/*.js')
-    .pipe(concat('index.js'))
-    .pipe(gulp.dest('./dist'));
+    .src('./src/*.js')
+    .pipe(gulp.dest('./dist/filter'));
 });
+
 /****************************************************/
 /* source */
 /****************************************************/
 gulp.task('copy:source', function() {
   return gulp
     .src('./src/source/*')
-    .pipe(gulp.dest('./dist/source'));
+    .pipe(gulp.dest('./dist/filter/source'));
 });
+
 /****************************************************/
 /* common */
 /****************************************************/
@@ -64,11 +64,9 @@ gulp.task('build', gulp.parallel('build:html', 'build:css', 'build:js', 'copy:so
 /* watch */
 /****************************************************/
 gulp.task('watch', function() {
-  gulp.watch('./src/*.html', gulp.series('build:html'));
-  gulp.watch('./src/css/*.css', gulp.series('create:css'));
-  gulp.watch('./src/css/*.scss', gulp.series('convert:sass'));
-  gulp.watch('./src/js/*.js', gulp.series('build:js'));
-  gulp.watch('./src/source/*', gulp.series('copy:source'));
+  gulp.watch('./src/**/*.html', gulp.series('build:html'));
+  gulp.watch('./src/**/*.css', gulp.series('build:css'));
+  gulp.watch('./src/**/*.js', gulp.series('build:js'));
 });
 
 /****************************************************/
@@ -76,7 +74,7 @@ gulp.task('watch', function() {
 /****************************************************/
 gulp.task('serve', function() {
   browserSync.init({
-    server: './dist'
+    server: './dist/filter'
   });
   browserSync.watch('./dist/**/*.*')
     .on('change', browserSync.reload);

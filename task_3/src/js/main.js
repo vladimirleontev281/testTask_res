@@ -1,3 +1,5 @@
+"use strict";
+
 const TARGETS = {
   startButton: document.getElementById('start-button'),
   preloader: document.getElementById('pre-loader'),

@@ -1,0 +1,30 @@
+.box {
+  max-width: 300px;
+  height: auto;
+  margin: 50px auto 50px auto;
+  padding: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: rgb(250, 243, 234);
+}
+
+.box-section{
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.box-section:last-of-type{
+  margin-bottom: 0;
+}
+
+.box-section__descrip{
+  margin-top: 0;
+  font-size: 18px;
+}
+
