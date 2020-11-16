@@ -1,5 +1,6 @@
 "use strict";
 
+/****** constants, variables, classes ******/
 const TARGETS = {
   size: document.getElementsByName('size'),
   color: document.getElementsByClassName('color-list__input'),
@@ -7,7 +8,6 @@ const TARGETS = {
   sale: document.getElementById('sale'),
 },
 DEFAULT = false;
-
 
 class Task2Data {
   constructor() {
@@ -22,6 +22,12 @@ class Task2Data {
       manufacturer: Array.from(TARGETS.manufacturer.options),
       sale: TARGETS.sale,
     };
+    Object.defineProperty(this.__proto__, "targets", {
+      writable: true,
+      enumerable: false,
+      configurable: false
+    });
+
     this.__proto__.propList = {
       size: {
         multivalue: false,
@@ -43,32 +49,87 @@ class Task2Data {
         values: new Set(['0', '1']),
         default: null,
       },
-    }
+    };
+    Object.defineProperty(this.__proto__, "propList", {
+      writable: true,
+      enumerable: false,
+      configurable: false
+    });
   }
 
-  isValidValue(propName, value) {
-    return this.propList.hasOwnProperty(propName) ? this.propList[propName].values.has(value) : false;
+  isValidValue(key, value) {
+    return this.propList.hasOwnProperty(key) ? 
+      this.propList[key].values.has(value.toLowerCase()) : false;
   }
 
-  // получает значения DOM-элементов и перезаписывает ими данные объекта
+  // получает значения DOM-элементов и перезаписывает ими данные объекта класса
   getValuesInDOM() {
-    
+    for (let i = 0; i < this.targets.size.length; i++) {
+      if (this.targets.size[i].checked) {
+        this.size = this.targets.size[i].value;
+        break;
+      }
+    }
+    this.color = [];
+    for (let i = 0; i < this.targets.color.length; i++) {
+      if (this.targets.color[i].checked) {
+        this.color.push(this.targets.color[i].value);
+      }
+    }
+    this.manufacturer = [];
+    for (let i = 0; i < this.targets.manufacturer.length; i++) {
+      if (this.targets.manufacturer[i].selected) {
+        this.manufacturer.push(this.targets.manufacturer[i].value);
+      }
+    }
+    this.sale = (this.targets.sale.checked) ? '1' : '';
   }
 
-  // устагавливает значения DOM-элементов
-  // в соответствии с текущими значениями объекта
+  // устанавливает значения DOM-элементов
+  // в соответствии с текущими значениями объекта класса
   setValuesInDOM() {
-    
+    for (let i = 0; i < this.targets.size.length; i++) {
+      if (this.targets.size[i].value.toLowerCase() == this.size.toLocaleLowerCase()) {
+        this.targets.size[i].checked = true;
+        break;
+      }
+    }
+    for (let i = 0; i < this.targets.color.length; i++) {
+      let item = this.targets.color[i];
+      item.checked = (this.color.includes(item.value.toLocaleLowerCase())) ? true : false;
+    }
+    for (let i = 0; i < this.targets.manufacturer.length; i++) {
+      let item = this.targets.manufacturer[i];
+      item.selected = (this.manufacturer.includes(item.value.toLocaleLowerCase())) ? true : false;
+    }
+    this.targets.sale.checked = (this.sale && +this.sale) ? true : false;
   }
 
-  // устанавливает значения внутреннего объекта в соответствии с полученным
+  // устанавливает значения объекта класса в соответствии со входным
   setObjValues(obj) {
+    writeValue = writeValue.bind(this);
+
     for (const key in obj) {
-      
+      if (this.propList.hasOwnProperty(key)) {
+        if (Array.isArray(obj[key])) {
+          obj[key].forEach(item => writeValue(key, item))
+        } else {
+          writeValue(key, obj[key]);
+        }
+      }
+    }
+
+    function writeValue(key, value) {
+      if (this.isValidValue(key, value)) {
+        this[key] = (this.propList[key].multivalue) ? 
+          (!this[key].includes(value)) ? this[key].concat(value) : this[key] :
+          (this[key] == '') ? value : this[key];
+      }
     }
   }
 }
 
+/****** MAIN LOGIC ******/
 
 document.addEventListener('DOMContentLoaded', () => {
   let data = new Task2Data;
@@ -77,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 for (const key in TARGETS) {
-  if (TARGETS[key].length) {
+  if (key == 'size' || key == 'color') {
     for (let i = 0; i < TARGETS[key].length; i++) {
       setListener(TARGETS[key][i]);
     }
@@ -86,16 +147,13 @@ for (const key in TARGETS) {
   }
 }
 
-
+/****** FUNCTION ******/
 
 function setListener(elem) {
   elem.addEventListener('change', ev => {
-    console.log(ev);
-
-    /* возможно не будет работать из-за того что это момент эвента */
-    // let data = new Task2Data;
-    // data.getValuesInDOM();
-    // console.log(getActualURL(data).url);
+    let data = new Task2Data;
+    data.getValuesInDOM();
+    console.log(getActualURL(data).url);
   });
 }
 
@@ -125,7 +183,8 @@ function getActualURL(obj) {
   let prop = '';
   for (const key in obj) {
     prop += (Array.isArray(obj[key])) ? 
-      obj[key].map(item => key + '=' + item).join('&') + '&' : key + '=' + obj[key] + '&';
+      (obj[key].length) ? obj[key].map(item => key + '=' + item).join('&') + '&' : '' : 
+      (obj[key]) ? key + '=' + obj[key] + '&' : '';
   }
   prop = prop.slice(0, prop.length - 1);
   return {
@@ -133,10 +192,6 @@ function getActualURL(obj) {
     encodedURL: location.origin + '?' + encodeURIComponent(prop)
   };
 }
-
-
-
-
 
 /*
 for tests
@@ -151,22 +206,3 @@ for tests
   console.log(getActualURL(temp));
 
 */
-
-
-// function objIsEmpty(obj) {
-//   for (let key in obj) {
-//     return false;
-//   }
-//   return true;
-// }
-
-// let manufacturer = document.getElementById('manufacturer');
-// manufacturer.addEventListener('change', ev => {
-//   let select = ev.target;
-//   console.log(Array.from(select.options));
-//   let selected = Array.from(select.options)
-//     .filter(option => option.selected)
-//     .map(option => option.value);
-//   console.log(selected);
-// });
-
