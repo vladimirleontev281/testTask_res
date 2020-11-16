@@ -1,8 +1,15 @@
 "use strict";
 
-const DEFAULT = false;
+const TARGETS = {
+  size: document.getElementsByName('size'),
+  color: document.getElementsByClassName('color-list__input'),
+  manufacturer: document.getElementById('manufacturer'),
+  sale: document.getElementById('sale'),
+},
+DEFAULT = false;
 
-class task2Data {
+
+class Task2Data {
   constructor() {
     this.size = '';
     this.color = [];
@@ -10,10 +17,10 @@ class task2Data {
     this.sale = '';
 
     this.__proto__.targets = {
-      size: document.getElementsByName('sale'),
-      color: document.getElementsByClassName('color-list__input'),
-      manufacturer: Array.from(document.getElementById('manufacturer').options),
-      sale: document.getElementById('sale'),
+      size: TARGETS.size,
+      color: TARGETS.color,
+      manufacturer: Array.from(TARGETS.manufacturer.options),
+      sale: TARGETS.sale,
     };
     this.__proto__.propList = {
       size: {
@@ -64,14 +71,38 @@ class task2Data {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log(getURLDetails());
-  
+  let data = new Task2Data;
+  data.setObjValues(getURLDetails());
+  data.setValuesInDOM();
 });
+
+for (const key in TARGETS) {
+  if (TARGETS[key].length) {
+    for (let i = 0; i < TARGETS[key].length; i++) {
+      setListener(TARGETS[key][i]);
+    }
+  } else {
+    setListener(TARGETS[key]);
+  }
+}
+
+
+
+function setListener(elem) {
+  elem.addEventListener('change', ev => {
+    console.log(ev);
+
+    /* возможно не будет работать из-за того что это момент эвента */
+    // let data = new Task2Data;
+    // data.getValuesInDOM();
+    // console.log(getActualURL(data).url);
+  });
+}
 
 function getURLDetails() {
   let output = {};
-  let details = (location.search) ? 
-    location.search.slice(1, location.search.length).split('&').map(item => item.split('=')) : null;
+  let url = decodeURIComponent(location.search);
+  let details = (url) ? url.slice(1, url.length).split('&').map(item => item.split('=')) : null;
 
   if (details) {
     for (let i = 0; i < details.length; i++) {
@@ -90,11 +121,36 @@ function getURLDetails() {
   }
 }
 
+function getActualURL(obj) {
+  let prop = '';
+  for (const key in obj) {
+    prop += (Array.isArray(obj[key])) ? 
+      obj[key].map(item => key + '=' + item).join('&') + '&' : key + '=' + obj[key] + '&';
+  }
+  prop = prop.slice(0, prop.length - 1);
+  return {
+    url: location.origin + '?' + prop,
+    encodedURL: location.origin + '?' + encodeURIComponent(prop)
+  };
+}
 
 
 
 
 
+/*
+for tests
+
+  console.log(getURLDetails());
+  let temp = {
+    color: ["1", "2"],
+    manufacturer: ["aaa", "ddd"],
+    sale: ["1", "2"],
+    size: ["M", "L"]
+  };
+  console.log(getActualURL(temp));
+
+*/
 
 
 // function objIsEmpty(obj) {
