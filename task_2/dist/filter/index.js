@@ -32,7 +32,7 @@ class Task2Data {
       size: {
         multivalue: false,
         values: new Set(['s', 'm', 'l']),
-        default: 's',
+        default: 'S',
       },
       color: {
         multivalue: true,
@@ -42,7 +42,7 @@ class Task2Data {
       manufacturer: {
         multivalue: true,
         values: new Set(['aaa', 'b&c',  'ddd', 'eee']),
-        default: 'aaa',
+        default: null,
       },
       sale: {
         multivalue: false,
@@ -88,20 +88,24 @@ class Task2Data {
   // устанавливает значения DOM-элементов
   // в соответствии с текущими значениями объекта класса
   setValuesInDOM() {
+    if (!this.size && DEFAULT && this.propList.size.default) this.size = this.propList.size.default;
     for (let i = 0; i < this.targets.size.length; i++) {
       if (this.targets.size[i].value.toLowerCase() == this.size.toLocaleLowerCase()) {
         this.targets.size[i].checked = true;
         break;
       }
     }
+
     for (let i = 0; i < this.targets.color.length; i++) {
       let item = this.targets.color[i];
       item.checked = (this.color.includes(item.value.toLocaleLowerCase())) ? true : false;
     }
+
     for (let i = 0; i < this.targets.manufacturer.length; i++) {
       let item = this.targets.manufacturer[i];
       item.selected = (this.manufacturer.includes(item.value.toLocaleLowerCase())) ? true : false;
     }
+
     this.targets.sale.checked = (this.sale && +this.sale) ? true : false;
   }
 
@@ -142,13 +146,13 @@ for (const key in TARGETS) {
     for (let i = 0; i < TARGETS[key].length; i++) {
       setListener(TARGETS[key][i]);
     }
-  } else {
+  } else if (key != 'sale') {
     setListener(TARGETS[key]);
   }
 }
 
-/****** FUNCTION ******/
 
+/****** FUNCTION ******/
 function setListener(elem) {
   elem.addEventListener('change', ev => {
     let data = new Task2Data;
@@ -192,17 +196,3 @@ function getActualURL(obj) {
     encodedURL: location.origin + '?' + encodeURIComponent(prop)
   };
 }
-
-/*
-for tests
-
-  console.log(getURLDetails());
-  let temp = {
-    color: ["1", "2"],
-    manufacturer: ["aaa", "ddd"],
-    sale: ["1", "2"],
-    size: ["M", "L"]
-  };
-  console.log(getActualURL(temp));
-
-*/
