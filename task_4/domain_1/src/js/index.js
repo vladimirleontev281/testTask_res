@@ -1,7 +1,7 @@
 "use strict";
 
 /****** imports and init the interfaces ******/
-import GetLsEditor from 'LsEditor';
+import GetLsEditor from './LsEditor';
 const lsEditor = new GetLsEditor;
 
 /****** constants, variables, classes ******/

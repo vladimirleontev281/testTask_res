@@ -8,7 +8,7 @@ export default class {
     });
 
     this.noImputRoot = (!inputRoot) ? true : false;
-    Object.defineProperty(this, "root", {
+    Object.defineProperty(this, "noImputRoot", {
       writable: true,
       enumerable: false,
       configurable: false
@@ -34,7 +34,7 @@ export default class {
       configurable: false
     });
 
-    logToConsole = true;
+    this.logToConsole = true;
   }
 
   init() {
