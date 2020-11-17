@@ -9,8 +9,14 @@
 <body>
   <div class="chat">
     <div class="input">
-      <input type="text" class="input__input-line" id="input-line">
-      <button class="input__send-button" id="send">send</button>
+      <div class="input__user-block">
+        <span class="input__user-description">User</span>
+        <input type="text" class="input__user-name" id="user">
+      </div>
+      <div class="input__text-block">
+        <input type="text" class="input__input-line" id="input-line">
+        <button class="input__send-button" id="send">send</button>
+      </div>
     </div>
     <ul class="history-block" id="history"></ul>
   </div>

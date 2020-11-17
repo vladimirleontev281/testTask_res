@@ -1,5 +1,9 @@
 "use strict";
 
+/****** imports and init the interfaces ******/
+import GetChatBaseManager from './ChatBaseManager';
+const chatBaseManager = new GetChatBaseManager();
+
 /****** constants, variables, classes ******/
 const TARGETS = {
   input: {
@@ -18,21 +22,36 @@ const TARGETS = {
     elem: document.getElementById('message-template'),
     id: 'message-template'
   },
+  user: {
+    elem: document.getElementById('user'),
+    id: 'user'
+  }
 };
-
-
 
 /****** MAIN LOGIC ******/
 document.addEventListener('DOMContentLoaded', () => {
-  let firstMessage = {
-    user: 'Lyooo',
-    text: 'Дратути! Дратути! Дратути! Дратути! Дратути! Дратути! Дратути! Дратути! Дратути! Дратути! '
-  };
-  setTemplate(TARGETS.message.id, TARGETS.history.id, firstMessage)
+  chatBaseManager.initChat();
+  setHistory(chatBaseManager.read());
+});
+
+TARGETS.send.elem.addEventListener('click', ev => {
+  let text = TARGETS.input.elem.value, user = TARGETS.user.elem.value;
+  if (text) {
+    chatBaseManager.writeMessage(user || 'no-name', text);
+    setHistory(chatBaseManager.read());
+  }
+  TARGETS.input.elem.value = '';
 });
 
 
 /****** FUNCTION ******/
+
+function setHistory(history) {
+  TARGETS.history.elem.innerHTML = '';
+  history.forEach(element => {
+    setTemplate(TARGETS.message.id, TARGETS.history.id, element)
+  });
+}
 
 function setTemplate(templateID, boxID, data, rewrite) {
   let template = document.getElementById(templateID).innerHTML;
