@@ -6,6 +6,7 @@ const TARGETS = {
   send: document.getElementById('send'),
   user: document.getElementById('user'),
   iframe: document.getElementById('domain_2'),
+  remove: document.getElementById('remove'),
 };
 
 import { resolve } from 'path';
@@ -15,7 +16,7 @@ const lsEditor = new GetLsEditor(TARGETS.iframe);
 
 /****** MAIN LOGIC ******/
 lsEditor.then(lsEditor => {
-  lsEditor.logToConsole = false;
+  lsEditor.logToConsole = true;
 
   TARGETS.send.addEventListener('click', () => {
     let text = TARGETS.input.value, user = TARGETS.user.value;
@@ -25,16 +26,27 @@ lsEditor.then(lsEditor => {
     }
     TARGETS.input.value = '';
   });
+
+  TARGETS.remove.addEventListener('click', () => {
+    deleteHistory(lsEditor);
+  });
 });
 
 /****** FUNCTION ******/
 function sendMessage(data, lsEditor) {
-  let history = lsEditor.read('task4Chat');
+  const KEY = 'task4Chat';
+  let history = lsEditor.read(KEY);
   history.push(data);
-  lsEditor.write('task4Chat', history, refresh, {lsEditor});
+  lsEditor.write(KEY, history, refresh, {lsEditor});
 }
 
 function refresh(data) {
   let lsEditor = data.lsEditor;
   lsEditor.root.dispatchEvent(new CustomEvent('baseUpdated'));
+}
+
+function deleteHistory(lsEditor) {
+  const KEY = 'task4Chat';
+  lsEditor.remove(KEY);
+  lsEditor.write(KEY, [], refresh, {lsEditor});
 }

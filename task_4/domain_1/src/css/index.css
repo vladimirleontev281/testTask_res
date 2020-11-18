@@ -11,6 +11,16 @@
   height: 100px;
   margin: 0;
 }
+.remover{
+  margin: 20px auto 0 auto;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+.remover__button{
+  cursor: pointer;
+}
 .box{
   width: 100%;
   height: 350px;
