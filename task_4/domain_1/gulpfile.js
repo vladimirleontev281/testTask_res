@@ -33,7 +33,7 @@ gulp.task('build:css', function() {
     .src('./src/css/*.css')
     .pipe(autoprefixer())
     .pipe(concat('styles.css'))
-    // .pipe(cssmin())
+    .pipe(cssmin())
     .pipe(gulp.dest('./dist'));
 });
 

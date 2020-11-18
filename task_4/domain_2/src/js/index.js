@@ -26,33 +26,41 @@ const TARGETS = {
     elem: document.getElementById('user'),
     id: 'user'
   }
-};
+},
+EVENTS = {
+  baseUpdated: new Event('baseUpdated'),
+  runCallback: new Event('runCallback', {detail: {callback: window.task4Callback}}),
+}
 
 /****** MAIN LOGIC ******/
 document.addEventListener('DOMContentLoaded', () => {
   chatBaseManager.initChat();
-  setHistory(chatBaseManager.read());
+  document.dispatchEvent(EVENTS.baseUpdated);
 });
 
 TARGETS.send.elem.addEventListener('click', ev => {
   let text = TARGETS.input.elem.value, user = TARGETS.user.elem.value;
   if (text) {
     chatBaseManager.writeMessage(user || 'no-name', text);
-    setHistory(chatBaseManager.read());
   }
+  document.dispatchEvent(EVENTS.baseUpdated);
   TARGETS.input.elem.value = '';
 });
 
-
-/****** FUNCTION ******/
-
-function setHistory(history) {
+document.addEventListener('baseUpdated', () => {
+  let history = chatBaseManager.read();
   TARGETS.history.elem.innerHTML = '';
   history.forEach(element => {
     setTemplate(TARGETS.message.id, TARGETS.history.id, element)
   });
-}
+});
 
+document.addEventListener('runCallback', ev => {
+  if (ev.detail.callback) ev.detail.callback.run(ev.detail.callback.data);
+});
+
+
+/****** FUNCTION ******/
 function setTemplate(templateID, boxID, data, rewrite) {
   let template = document.getElementById(templateID).innerHTML;
   let box = document.getElementById(boxID);
