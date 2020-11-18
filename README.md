@@ -95,9 +95,9 @@ domain_2: https://vladimirleontev281.github.io/testTask_res/task_4/domain_2/dist
 
 3. Promise после fulfilled возвращает экзепляр класса LsEditor.
 
-  promiseLsEditor.then(lsEditor => {
-    ... логика ...
-  });
+    promiseLsEditor.then(lsEditor => {
+      ... логика ...
+    });
 
 
 
