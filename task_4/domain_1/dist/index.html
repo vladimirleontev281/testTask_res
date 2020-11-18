@@ -7,8 +7,23 @@
   <title>Resliv - task 4 - domain 1</title>
 </head>
 <body>
+  <div class="box-for-chat">
+    <div class="chat">
+      <div class="input">
+        <div class="input__user-block">
+          <span class="input__user-description">User</span>
+          <input type="text" class="input__user-name" id="user">
+        </div>
+        <div class="input__text-block">
+          <input type="text" class="input__input-line" id="input-line">
+          <button class="input__send-button" id="send">send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="box">
-    <iframe class="box__iframe" id="domain_2" src="../../domain_2/dist" frameborder="0"></iframe>
+    <iframe class="box__iframe" id="domain_2" src="./../../domain_2/dist" frameborder="0"></iframe>
   </div>
   <script src="index.js"></script>
 </body>

@@ -12,7 +12,6 @@
   width: 100%;
   height: auto;
   padding: 8px;
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
   background-color: rgb(202, 214, 236);
@@ -97,35 +96,4 @@
 .message__text{
   margin-bottom: 0;
   padding-left: 10px;
-}
-.box-for-chat{
-  width: 100%;
-  margin: 0;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-}
-.box-for-chat .chat{
-  overflow: hidden;
-  height: 100px;
-  margin: 0;
-}
-.box{
-  width: 100%;
-  height: 350px;
-  margin: 20px auto 0 auto;
-}
-.box::before{
-  display: inline-block;
-  width: 100%;
-  content: 'тут начинается iframe';
-  border-top: 1px dashed black;
-  border-bottom: 1px dashed black;
-  text-align: center;
-  font-style: italic;
-}
-.box__iframe{
-  width: 100%;
-  height: 100%;
 }
