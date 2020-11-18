@@ -26,16 +26,12 @@ const TARGETS = {
     elem: document.getElementById('user'),
     id: 'user'
   }
-},
-EVENTS = {
-  baseUpdated: new Event('baseUpdated'),
-  runCallback: new Event('runCallback', {detail: {callback: window.task4Callback}}),
-}
+};
 
 /****** MAIN LOGIC ******/
 document.addEventListener('DOMContentLoaded', () => {
   chatBaseManager.initChat();
-  document.dispatchEvent(EVENTS.baseUpdated);
+  window.dispatchEvent(new Event('baseUpdated'));
 });
 
 TARGETS.send.elem.addEventListener('click', ev => {
@@ -43,22 +39,17 @@ TARGETS.send.elem.addEventListener('click', ev => {
   if (text) {
     chatBaseManager.writeMessage(user || 'no-name', text);
   }
-  document.dispatchEvent(EVENTS.baseUpdated);
+  window.dispatchEvent(new Event('baseUpdated'));
   TARGETS.input.elem.value = '';
 });
 
-document.addEventListener('baseUpdated', () => {
+window.addEventListener('baseUpdated', () => {
   let history = chatBaseManager.read();
   TARGETS.history.elem.innerHTML = '';
   history.forEach(element => {
     setTemplate(TARGETS.message.id, TARGETS.history.id, element)
   });
 });
-
-document.addEventListener('runCallback', ev => {
-  if (ev.detail.callback) ev.detail.callback.run(ev.detail.callback.data);
-});
-
 
 /****** FUNCTION ******/
 function setTemplate(templateID, boxID, data, rewrite) {

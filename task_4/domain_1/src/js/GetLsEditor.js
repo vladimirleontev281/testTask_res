@@ -6,12 +6,6 @@ class LsEditor {
       enumerable: true,
       configurable: false
     });
-    this.reverseSide = false;
-    Object.defineProperty(this, "reverseSide", {
-      writable: true,
-      enumerable: true,
-      configurable: false
-    });
 
     this.root = source;
     Object.defineProperty(this, "root", {
@@ -55,9 +49,9 @@ class LsEditor {
       if (this.logToConsole) console.log(this.MESSAGES.noKey);
       return false;
     } else {
-      let result = this.root.localStorage.getItem(key);
+      let result = JSON.parse(this.root.localStorage.getItem(key));
       if (this.logToConsole) console.log(result);
-      if (callback) this.runCallback(callback, data, this.reverseSide);
+      if (callback) callback(data);
       return result;
     }
   }
@@ -67,10 +61,10 @@ class LsEditor {
       if (this.logToConsole) console.log(this.MESSAGES.noKey);
       return false;
     } else {
-      this.root.localStorage.setItem(key, value);
+      this.root.localStorage.setItem(key, JSON.stringify(value));
       let check = this.root.localStorage.getItem(key);
       if (this.logToConsole) console.log(check ? this.MESSAGES.write.yes : this.MESSAGES.write.no);
-      if (callback) this.runCallback(callback, data, this.reverseSide);
+      if (callback) callback(data);
       return check ? true : false;
     }
   }
@@ -83,16 +77,8 @@ class LsEditor {
       this.root.localStorage.removeItem(key);
       let check = this.root.localStorage.getItem(key);
       if (this.logToConsole) console.log(!check ? this.MESSAGES.remove.yes : this.MESSAGES.remove.no);
-      if (callback) this.runCallback(callback, data, this.reverseSide);
+      if (callback) callback(data);
       return !check ? true : false;
-    }
-  }
-
-  runCallback(callback, data, reverseSide) {
-    if (reverseSide) {
-      console.log('Пока не реализовано');
-    } else {
-      callback(data);
     }
   }
 }
