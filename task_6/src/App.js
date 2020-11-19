@@ -17,14 +17,14 @@ function App() {
               <h2 className="header__anything-else">anything else</h2>
             </div>
             <div className="header__links">
-              <Link className="header__link" to="/">Home</Link>
-              <Link className="header__link" to="/employees">Employees</Link>
+              <Link className="header__link" to="/testTask_res/task_6/public/">Home</Link>
+              <Link className="header__link" to="/testTask_res/task_6/public/employees">Employees</Link>
             </div>
           </div>
         </header>
         <main>
-          <Route exact path="/" component={IndexPage} />
-          <Route exact path="/employees" component={Employees} />
+          <Route exact path="/testTask_res/task_6/public/" component={IndexPage} />
+          <Route exact path="/testTask_res/task_6/public/employees" component={Employees} />
         </main>
       </div>
     </Router>
