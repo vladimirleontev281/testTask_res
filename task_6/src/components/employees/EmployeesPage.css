@@ -1,0 +1,9 @@
+.EmployeesPage{
+  width: 100%;
+  padding: 0 30px;
+  padding-bottom: 50px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}

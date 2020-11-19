@@ -1,0 +1,41 @@
+.AddEmployee{
+  width: 300px;
+  height: auto;
+  margin-right: 30px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+.AddEmployee__header{
+  text-decoration: underline;
+  text-transform: capitalize;
+}
+.AddEmployee__fields{
+  width: 100%;
+  height: auto;
+  margin-bottom: 30px;
+}
+.PanelAddEmployee__field{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.PanelAddEmployee__field:last-of-type{
+  margin-right: 0;
+}
+.PanelAddEmployee__descrip{
+  margin-right: 5px;
+  text-transform: capitalize;
+}
+.PanelAddEmployee__input.error{
+  box-shadow: 0 0 4 0 red;
+}
+.PanelAddEmployee__button{
+  width: 150px;
+  display: block;
+  cursor: pointer;
+  text-transform: uppercase;
+}
