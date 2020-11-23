@@ -20,7 +20,7 @@ class Task2Data {
       size: TARGETS.size,
       color: TARGETS.color,
       manufacturer: Array.from(TARGETS.manufacturer.options),
-      sale: TARGETS.sale,
+      sale: TARGETS.sale, 
     };
     Object.defineProperty(this.__proto__, "targets", {
       writable: true,
@@ -154,7 +154,7 @@ for (const key in TARGETS) {
 
 /****** FUNCTION ******/
 function setListener(elem) {
-  elem.addEventListener('change', ev => {
+  elem.addEventListener('change', () => {
     let data = new Task2Data;
     data.getValuesInDOM();
     console.log(getActualURL(data).url);

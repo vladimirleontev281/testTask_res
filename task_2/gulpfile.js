@@ -47,18 +47,9 @@ gulp.task('build:js', function() {
 });
 
 /****************************************************/
-/* source */
-/****************************************************/
-gulp.task('copy:source', function() {
-  return gulp
-    .src('./src/source/*')
-    .pipe(gulp.dest('./dist/filter/source'));
-});
-
-/****************************************************/
 /* common */
 /****************************************************/
-gulp.task('build', gulp.parallel('build:html', 'build:css', 'build:js', 'copy:source'));
+gulp.task('build', gulp.parallel('build:html', 'build:css', 'build:js'));
 
 /****************************************************/
 /* watch */

@@ -8,7 +8,7 @@
     "deploy": "npm install",
     "build": "gulp build",
     "dev": "gulp dev",
-    "start": "npm run deploy && npm run run",
+    "start": "npm run deploy && gulp start",
     "restart": "gulp start"
   },
   "author": "",

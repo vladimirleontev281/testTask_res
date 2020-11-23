@@ -16,15 +16,12 @@ const lsEditor = new GetLsEditor(TARGETS.iframe);
 
 /****** MAIN LOGIC ******/
 lsEditor.then(lsEditor => {
-  lsEditor.logToConsole = true;
-
   TARGETS.send.addEventListener('click', () => {
-    let text = TARGETS.input.value, user = TARGETS.user.value;
+    let text = TARGETS.input.value;
     if (text) {
-      let data = {user: user || 'no-name', text};
-      sendMessage(data, lsEditor);
+      sendMessage({user: TARGETS.user.value || 'no-name', text}, lsEditor);
+      TARGETS.input.value = '';
     }
-    TARGETS.input.value = '';
   });
 
   TARGETS.remove.addEventListener('click', () => {
@@ -40,8 +37,7 @@ function sendMessage(data, lsEditor) {
   lsEditor.write(KEY, history, refresh, {lsEditor});
 }
 
-function refresh(data) {
-  let lsEditor = data.lsEditor;
+function refresh({lsEditor}) {
   lsEditor.root.dispatchEvent(new CustomEvent('baseUpdated'));
 }
 
